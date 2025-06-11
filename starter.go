@@ -1,8 +1,8 @@
 package clickhouseStarter
 
 import (
-	"photon-core-starter/core"
-	"photon-clickhouse-starter/CHDatabase"
+	CHDatabase "git.ggyyonline.com/aggregator/photon-core/photon-clickhouse-starter/CHDatabase"
+	"github.com/dennesshen/photon-core-starter/core"
 )
 
 func init() {

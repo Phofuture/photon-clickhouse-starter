@@ -1,4 +1,4 @@
-package CHDatabase
+package chdatabase
 
 type ConnectData struct {
 	Hosts []string `yaml:"host"`

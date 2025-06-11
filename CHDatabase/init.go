@@ -1,11 +1,13 @@
-package CHDatabase
+package chdatabase
 
 import (
 	"context"
+
+	"github.com/dennesshen/photon-core-starter/configuration"
+	"github.com/dennesshen/photon-core-starter/log"
+
 	clickhouse "github.com/ClickHouse/clickhouse-go/v2"
 	gormClickHouse "gorm.io/driver/clickhouse"
-	"photon-core-starter/configuration"
-	"photon-core-starter/log"
 
 	"gorm.io/gorm"
 )
@@ -26,12 +28,12 @@ func Start(ctx context.Context) (err error) {
 		return
 	}
 
-	if masterDb, err = connect(ctx, config.ClickHouse.Master); err != nil {
+	if masterDb, err = connectDB(ctx, config.ClickHouse.Master); err != nil {
 		log.Logger().Error(ctx, "fail to connect master clickhouse database", "error", err, "config", config)
 		return
 	}
 
-	if slaveDb, err = connect(ctx, config.ClickHouse.Slave); err != nil {
+	if slaveDb, err = connectDB(ctx, config.ClickHouse.Slave); err != nil {
 		log.Logger().Error(ctx, "fail to connect slave clickhouse database", "error", err, "config", config)
 		return
 	}
@@ -46,11 +48,47 @@ func Start(ctx context.Context) (err error) {
 			return
 		}
 	}
+
+	if clickConn, err = connect(ctx, config.ClickHouse.Master); err != nil {
+		log.Logger().Error(ctx, "fail to connect slave clickhouse database", "error", err, "config", config)
+		return
+	}
+
 	return
 }
 
 // 連線資料庫
-func connect(ctx context.Context, connectData ConnectData) (db *gorm.DB, err error) {
+func connect(ctx context.Context, connectData ConnectData) (clickConn clickhouse.Conn, err error) {
+	clickConn, err = clickhouse.Open(&clickhouse.Options{
+		Addr: connectData.Hosts,
+		Auth: clickhouse.Auth{
+			Database: connectData.Auth.Database,
+			Username: connectData.Auth.Username,
+			Password: connectData.Auth.Password,
+		},
+		ClientInfo: clickhouse.ClientInfo{
+			Products: []struct {
+				Name    string
+				Version string
+			}{
+				{
+					Name:    connectData.ClientInfo.Name,
+					Version: connectData.ClientInfo.Version,
+				},
+			},
+		},
+	})
+
+	if err != nil {
+		log.Logger().Error(ctx, "open click house conn error", "error", err)
+		return nil, err
+	}
+
+	return clickConn, nil
+}
+
+// 連線資料庫 DB
+func connectDB(ctx context.Context, connectData ConnectData) (db *gorm.DB, err error) {
 	sqlDB := clickhouse.OpenDB(&clickhouse.Options{
 		Addr: connectData.Hosts,
 		Auth: clickhouse.Auth{
