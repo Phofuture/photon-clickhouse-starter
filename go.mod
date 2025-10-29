@@ -1,4 +1,4 @@
-module git.ggyyonline.com/aggregator/photon-core/photon-clickhouse-starter
+module github.com/Phofuture/photon-clickhouse-starter
 
 go 1.23.0
 

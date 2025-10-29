@@ -1,7 +1,7 @@
 package clickhouseStarter
 
 import (
-	CHDatabase "git.ggyyonline.com/aggregator/photon-core/photon-clickhouse-starter/CHDatabase"
+	CHDatabase "github.com/Phofuture/photon-clickhouse-starter/CHDatabase"
 	"github.com/dennesshen/photon-core-starter/core"
 )
 
