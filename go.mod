@@ -4,7 +4,7 @@ go 1.23.0
 
 require (
 	github.com/ClickHouse/clickhouse-go/v2 v2.33.0
-	github.com/dennesshen/photon-core-starter v1.0.4
+	github.com/Phofuture/photon-core-starter v1.0.3
 	gorm.io/driver/clickhouse v0.6.1
 	gorm.io/gorm v1.25.11
 )

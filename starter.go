@@ -2,7 +2,7 @@ package clickhouseStarter
 
 import (
 	CHDatabase "github.com/Phofuture/photon-clickhouse-starter/CHDatabase"
-	"github.com/dennesshen/photon-core-starter/core"
+	"github.com/Phofuture/photon-core-starter/core"
 )
 
 func init() {

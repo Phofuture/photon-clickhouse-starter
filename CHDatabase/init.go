@@ -3,8 +3,8 @@ package chdatabase
 import (
 	"context"
 
-	"github.com/dennesshen/photon-core-starter/configuration"
-	"github.com/dennesshen/photon-core-starter/log"
+	"github.com/Phofuture/photon-core-starter/configuration"
+	"github.com/Phofuture/photon-core-starter/log"
 
 	clickhouse "github.com/ClickHouse/clickhouse-go/v2"
 	gormClickHouse "gorm.io/driver/clickhouse"
