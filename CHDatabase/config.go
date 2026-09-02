@@ -11,6 +11,11 @@ type ConnectData struct {
 		Name    string `yaml:"name"`
 		Version string `yaml:"version"`
 	} `yaml:"clientInfo"`
+	Pool struct {
+		MaxOpenConns       int `yaml:"maxOpenConns"`
+		MaxIdleConns       int `yaml:"maxIdleConns"`
+		DialTimeoutSeconds int `yaml:"dialTimeoutSeconds"`
+	} `yaml:"pool"`
 }
 
 type Config struct {
